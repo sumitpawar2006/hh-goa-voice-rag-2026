@@ -29,13 +29,14 @@ class FastEmbedProvider:
         model_name: str,
         cache_path: Path = Path("rag/data/cache/embeddings.sqlite3"),
         batch_size: int = 32,
+        threads: int | None = 2,
     ) -> None:
         from fastembed import TextEmbedding
 
         self.model_name = model_name
         self.batch_size = batch_size
         self.cache = EmbeddingCache(cache_path)
-        self._model = TextEmbedding(model_name=model_name, lazy_load=True)
+        self._model = TextEmbedding(model_name=model_name, threads=threads, lazy_load=True)
         model_info = next(
             (item for item in TextEmbedding.list_supported_models() if item["model"] == model_name),
             None,
@@ -113,9 +114,10 @@ def build_embedder(
     model_name: str,
     batch_size: int = 32,
     cache_path: Path = Path("rag/data/cache/embeddings.sqlite3"),
+    threads: int | None = 2,
 ) -> EmbeddingProvider:
     if provider == "hash":
         return HashEmbeddingProvider()
     if provider == "fastembed":
-        return FastEmbedProvider(model_name, cache_path, batch_size)
+        return FastEmbedProvider(model_name, cache_path, batch_size, threads)
     raise ValueError(f"Unknown embedding provider: {provider}")

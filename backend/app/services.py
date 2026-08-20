@@ -26,6 +26,7 @@ class ServiceContainer:
             self.settings.embedding_provider,
             self.settings.embedding_model,
             self.settings.embedding_batch_size,
+            threads=self.settings.embedding_threads,
         )
 
     @cached_property

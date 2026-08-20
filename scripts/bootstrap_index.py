@@ -62,6 +62,7 @@ def bootstrap(settings: Settings, seed_path: Path = Path("rag/data/bootstrap/chu
             settings.embedding_provider,
             settings.embedding_model,
             settings.embedding_batch_size,
+            threads=settings.embedding_threads,
         )
         vectors = embedder.embed_documents([chunk.text for chunk in chunks])
         store.ensure_collection(embedder.dimension)

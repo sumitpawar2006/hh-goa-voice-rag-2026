@@ -37,6 +37,7 @@ def main() -> None:
         settings.embedding_model,
         settings.embedding_batch_size,
         cache_path=cache_path,
+        threads=settings.embedding_threads,
     )
     store = QdrantVectorStore(
         settings.qdrant_collection,

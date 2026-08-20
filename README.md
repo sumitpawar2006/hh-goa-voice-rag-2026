@@ -177,8 +177,8 @@ Reports are written under `reports/`. P50, P70, and P100 use nearest-rank percen
 
 - Real Hindi validation ingestion: 500 records, 4,978 deduplicated documents, 5,048 semantic chunks, and 5,048 persistent 384-dimensional Qdrant points.
 - Retrieval evaluation, 100 cold isolated judged queries: lexical reranking improved Recall@5 from `0.525` to `0.590` and MRR from `0.3012` to `0.3492`; mean search-plus-rerank latency was `16.705 ms`.
-- Cold-query extractive RAG benchmark, 30 distinct queries with the embedding model prewarmed: total P50 `165.411 ms`, P70 `191.633 ms`, and P100 `267.974 ms`.
-- The measured target is met at P50/P70, but **not at P100**. External ElevenLabs STT is excluded because no credential was available for a real voice measurement.
+- Cold-query extractive RAG benchmark, 30 distinct queries with the embedding model prewarmed and CPU inference limited to two measured-optimal threads: total P50 `98.492 ms`, P70 `104.577 ms`, and P100 `121.565 ms`.
+- The measured text-RAG target is met at P50/P70/P100. External ElevenLabs STT is excluded because no credential was available, so this is not a full voice end-to-end latency claim.
 - Optional local Qwen CPU benchmark, three requests: total P50 `12,961.944 ms`, P70/P100 `24,170.064 ms`. This path is functional but not the latency-default path.
 
 The checked-in documentation records these values because generated reports and data artifacts are intentionally ignored by Git.

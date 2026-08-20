@@ -39,6 +39,7 @@ class Settings(BaseSettings):
     embedding_provider: Literal["fastembed", "hash"] = "fastembed"
     embedding_model: str = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
     embedding_batch_size: int = Field(default=32, ge=1, le=512)
+    embedding_threads: int = Field(default=2, ge=1, le=64)
     prewarm_embeddings: bool = True
     qdrant_path: Path = Path("rag/data/qdrant")
     qdrant_url: str | None = None

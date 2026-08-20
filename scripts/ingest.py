@@ -44,7 +44,10 @@ def main() -> None:
     write_jsonl(processed / "chunks.jsonl", chunks)
 
     embedder = build_embedder(
-        settings.embedding_provider, settings.embedding_model, settings.embedding_batch_size
+        settings.embedding_provider,
+        settings.embedding_model,
+        settings.embedding_batch_size,
+        threads=settings.embedding_threads,
     )
     print(f"Embedding {len(chunks)} chunks with {embedder.model_name}...")
     vectors = embedder.embed_documents([chunk.text for chunk in chunks])

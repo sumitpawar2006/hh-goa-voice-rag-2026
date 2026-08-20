@@ -44,7 +44,10 @@ def main() -> None:
         if len(queries) >= args.query_limit:
             break
     embedder = build_embedder(
-        settings.embedding_provider, settings.embedding_model, settings.embedding_batch_size
+        settings.embedding_provider,
+        settings.embedding_model,
+        settings.embedding_batch_size,
+        threads=settings.embedding_threads,
     )
     router = ChunkerRouter(settings.chunk_size, settings.chunk_overlap)
     results: dict[str, dict[str, Any]] = {}

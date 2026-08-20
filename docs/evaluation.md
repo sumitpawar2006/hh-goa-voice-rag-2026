@@ -55,14 +55,14 @@ The optimized benchmark used 30 distinct real queries, cold per-query embedding-
 
 | Stage | P50 | P70 | P100 |
 |---|---:|---:|---:|
-| Embedding | 143.387 ms | 171.675 ms | 216.643 ms |
-| Vector search | 15.909 ms | 18.647 ms | 23.558 ms |
-| Reranking | 3.008 ms | 3.428 ms | 12.781 ms |
-| Generation | 1.328 ms | 1.482 ms | 6.738 ms |
-| Grounding | 1.042 ms | 1.130 ms | 9.589 ms |
-| **Total** | **165.411 ms** | **191.633 ms** | **267.974 ms** |
+| Embedding | 85.032 ms | 89.543 ms | 104.640 ms |
+| Vector search | 10.656 ms | 11.436 ms | 13.580 ms |
+| Reranking | 2.134 ms | 2.356 ms | 3.614 ms |
+| Generation | 0.728 ms | 1.003 ms | 1.762 ms |
+| Grounding | 0.575 ms | 0.765 ms | 2.792 ms |
+| **Total** | **98.492 ms** | **104.577 ms** | **121.565 ms** |
 
-P50 and P70 are under 200 ms; P100 is not. This report excludes external speech-to-text and therefore is not a voice end-to-end compliance claim.
+P50, P70, and P100 are under 200 ms after measuring CPU thread configurations and limiting FastEmbed/ONNX inference to two threads. The 30 distinct cold-query requests produced 27 grounded answers, three relevance refusals, and zero failures. This report excludes external speech-to-text and therefore is not a voice end-to-end compliance claim.
 
 A separate three-request local Qwen2.5-0.5B llama.cpp CPU run measured total P50 12,961.944 ms and P70/P100 24,170.064 ms. Two requests were grounded and one was refused. It proves the local LLM route works, but the sample is intentionally labeled small and is not used to claim competition latency.
 
