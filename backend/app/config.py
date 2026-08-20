@@ -31,6 +31,7 @@ class Settings(BaseSettings):
     dataset_language: str = "hi"
     dataset_split: Literal["train", "validation"] = "validation"
     dataset_sample_size: int = Field(default=500, ge=1)
+    bootstrap_from_dataset: bool = False
     chunking_strategy: Literal["fixed", "overlap", "semantic", "metadata"] = "semantic"
     chunk_size: int = Field(default=180, ge=32, le=2048)
     chunk_overlap: int = Field(default=36, ge=0, le=1024)

@@ -209,7 +209,7 @@ The final checker exits non-zero and says `NOT_READY` when credentials, measurem
 
 ## Deployment
 
-The multi-stage `Dockerfile` builds React and serves it with FastAPI as one container. `docker-compose.yml` persists embedded Qdrant. Production must supply a generated real-data bootstrap seed or remote Qdrant, plus the ElevenLabs key. See [docs/deployment.md](docs/deployment.md).
+The multi-stage `Dockerfile` builds React and serves it with FastAPI as one container. `docker-compose.yml` persists embedded Qdrant. `render.yaml` defines a Singapore Docker web service with a persistent disk and streams a bounded real MSMARCO-XI sample into Qdrant on the first start, so dataset passages are not copied into this repository. Render prompts for the ElevenLabs secret during Blueprint creation. See [docs/deployment.md](docs/deployment.md).
 
 ## Submission assets
 

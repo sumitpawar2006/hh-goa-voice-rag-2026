@@ -11,6 +11,14 @@ docker run --env-file .env -p 8000:8000 nexus-voice-rag
 
 Docker was not available in the inspected development environment, so a successful local frontend build and backend test suite do not by themselves constitute a verified Docker build.
 
+## Render Blueprint
+
+`render.yaml` is the prepared production path. It uses the repository Dockerfile, the Singapore region, CI-gated automatic deploys, `/health`, and a persistent disk mounted at `/app/runtime`. Persistent disks require a paid Render web-service plan.
+
+On an empty disk, `scripts.bootstrap_index` streams 50 official Hindi validation records directly from AI4Bharat MSMARCO-XI, applies semantic chunking, generates real multilingual vectors, and writes Qdrant under the mounted disk. Later restarts detect existing points and skip the operation. The bounded deployment sample keeps first-start resource use practical; the verified local evaluation remains the 500-record index described in the README.
+
+Create a Blueprint from the public repository, supply `ELEVENLABS_API_KEY` when Render prompts for the `sync: false` value, and wait for the initial dataset/vector bootstrap before judging readiness. Do not put the key in `render.yaml`.
+
 ## Required production state
 
 - `ELEVENLABS_API_KEY` as a secret.
@@ -37,4 +45,4 @@ Do not mark deployment complete from a build log. A successful live request and 
 
 ## Current environment constraint
 
-Firebase CLI authentication is available, but Firebase Hosting alone cannot host this stateful Python/Qdrant/LLM container. A full deployment therefore needs a container platform with secrets and persistent/remote vector storage. Creating a static-only site would not satisfy the end-to-end requirement and is deliberately not reported as success.
+Firebase Hosting alone cannot host this stateful Python/Qdrant/LLM container. Render is therefore the selected deployment target, but no Render authentication or API key was available in the inspected environment. Creating a static-only Firebase site would not satisfy the end-to-end requirement and is deliberately not reported as success.

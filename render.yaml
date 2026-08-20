@@ -1,0 +1,40 @@
+services:
+  - type: web
+    name: nexus-voice-rag-2026
+    runtime: docker
+    plan: starter
+    region: singapore
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    autoDeployTrigger: checksPass
+    healthCheckPath: /health
+    numInstances: 1
+    disk:
+      name: nexus-runtime
+      mountPath: /app/runtime
+      sizeGB: 5
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: QDRANT_PATH
+        value: /app/runtime/qdrant
+      - key: GENERATOR_PROVIDER
+        value: extractive
+      - key: BOOTSTRAP_FROM_DATASET
+        value: "true"
+      - key: DATASET_LANGUAGE
+        value: hi
+      - key: DATASET_SPLIT
+        value: validation
+      - key: DATASET_SAMPLE_SIZE
+        value: "50"
+      - key: CHUNKING_STRATEGY
+        value: semantic
+      - key: RERANKER_MODE
+        value: lexical
+      - key: MIN_RELEVANCE_SCORE
+        value: "0.50"
+      - key: PREWARM_EMBEDDINGS
+        value: "true"
+      - key: ELEVENLABS_API_KEY
+        sync: false
