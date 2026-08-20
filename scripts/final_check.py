@@ -51,11 +51,19 @@ def main() -> None:
 
     live_url = os.getenv("LIVE_URL", "").rstrip("/")
     live_verified = False
+    live_index_ready = False
     if live_url:
         try:
-            live_verified = httpx.get(f"{live_url}/health", timeout=10).status_code == 200
-        except httpx.HTTPError:
+            response = httpx.get(f"{live_url}/health", timeout=10)
+            live_verified = response.status_code == 200
+            if live_verified:
+                vector = response.json().get("services", {}).get("vector_store", {})
+                live_index_ready = (
+                    vector.get("status") == "ready" and int(vector.get("points", 0)) > 0
+                )
+        except (httpx.HTTPError, TypeError, ValueError):
             live_verified = False
+    index_ready = index_ready or live_index_ready
 
     checklist: dict[str, bool] = {
         "dataset_inspection_works": exists("reports/dataset_inspection.json"),
