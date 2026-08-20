@@ -2,17 +2,13 @@ services:
   - type: web
     name: nexus-voice-rag-2026
     runtime: docker
-    plan: starter
+    plan: free
     region: singapore
     dockerfilePath: ./Dockerfile
     dockerContext: .
     autoDeployTrigger: checksPass
     healthCheckPath: /health
     numInstances: 1
-    disk:
-      name: nexus-runtime
-      mountPath: /app/runtime
-      sizeGB: 5
     envVars:
       - key: APP_ENV
         value: production
