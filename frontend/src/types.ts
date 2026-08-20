@@ -1,0 +1,7 @@
+export interface StageTrace { stage: string; status: 'passed' | 'failed' | 'skipped'; latency_ms: number; detail?: string | null }
+export interface SourceReference { document_id: string; chunk_id: string; text: string; source: string; similarity_score: number; rerank_score?: number | null; metadata: Record<string, unknown>; strategy: string; position: number }
+export interface LatencyBreakdown { validation_ms: number; safety_ms: number; embedding_ms: number; vector_search_ms: number; reranking_ms: number; generation_ms: number; grounding_ms: number; total_ms: number }
+export interface RAGResponse { request_id: string; answer: string; sources: SourceReference[]; grounded: boolean; confidence: number; refusal_reason?: string | null; generator: string; retrieval_count: number; chunking_strategy?: string | null; latency: LatencyBreakdown; trace: StageTrace[] }
+export interface Transcript { text: string; language_code?: string | null; language_probability?: number | null; latency_ms: number; provider: 'elevenlabs'; model: string }
+export interface VoiceQueryResponse { request_id: string; transcript: Transcript; result: RAGResponse; total_latency_ms: number }
+export interface HealthResponse { status: 'ready' | 'degraded'; version: string; services: { vector_store: { status: string; points: number; collection?: string }; embeddings: { provider: string; model: string }; generation: { provider: string; ready: boolean }; speech_to_text: { provider: string; model: string; ready: boolean } } }

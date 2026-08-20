@@ -1,0 +1,14 @@
+.git
+.venv
+.venv-llm
+frontend/node_modules
+frontend/dist
+rag/data/raw
+rag/data/processed
+rag/data/qdrant
+rag/data/cache
+rag/data/models
+reports
+__pycache__
+*.pyc
+.env

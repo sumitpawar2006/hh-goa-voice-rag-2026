@@ -1,0 +1,40 @@
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Python
+.venv/
+.venv-llm/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.test-tmp/
+.tmp/
+sandbox-write-probe/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+
+# Runtime data and models
+rag/data/processed/
+rag/data/raw/
+rag/data/qdrant/
+rag/data/cache/
+rag/data/models/
+reports/*.json
+reports/*.jsonl
+!reports/.gitkeep
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/.env*
+
+# Editors / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
