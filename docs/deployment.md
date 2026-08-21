@@ -15,7 +15,7 @@ Docker was not available in the inspected development environment, so a successf
 
 `render.yaml` is the prepared production path. It uses the repository Dockerfile, the Singapore region, a free Render web service, CI-gated automatic deploys, and `/health`. The free service uses ephemeral storage under `/app/runtime`.
 
-On an empty runtime, `scripts.bootstrap_index` loads 500 committed semantic chunks exported from the official Hindi validation split of AI4Bharat MSMARCO-XI, generates real multilingual vectors, and writes Qdrant locally. The seed avoids loading the large Parquet/datasets stack on the memory-limited free instance. The verified local evaluation remains the 500-record index described in the README.
+On an empty runtime, `scripts.bootstrap_index` loads 500 committed semantic chunks exported from the official Hindi validation split of AI4Bharat MSMARCO-XI, generates deterministic character-trigram vectors, and writes Qdrant locally. The seed and lightweight embedder avoid loading the large Parquet and multilingual ONNX stacks on the 512 MB free instance. The verified local FastEmbed evaluation remains the 500-record index described in the README.
 
 Create a Blueprint from the public repository, add `ELEVENLABS_API_KEY` as a secret in the Render service environment, and wait for the initial vector bootstrap before judging readiness. Do not put the key in `render.yaml`.
 

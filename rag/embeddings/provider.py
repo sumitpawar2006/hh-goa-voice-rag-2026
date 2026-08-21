@@ -75,7 +75,7 @@ class FastEmbedProvider:
 
 
 class HashEmbeddingProvider:
-    """Deterministic feature-hashing embedder used only for tests and offline diagnostics."""
+    """Deterministic lightweight feature-hashing embedder for constrained deployments."""
 
     model_name = "hash-char-trigram-v1"
 

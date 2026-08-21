@@ -16,6 +16,8 @@ services:
         value: /app/runtime/qdrant
       - key: GENERATOR_PROVIDER
         value: extractive
+      - key: EMBEDDING_PROVIDER
+        value: hash
       - key: BOOTSTRAP_FROM_DATASET
         value: "false"
       - key: DATASET_LANGUAGE

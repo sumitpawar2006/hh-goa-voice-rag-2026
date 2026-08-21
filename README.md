@@ -66,7 +66,7 @@ Production vectors use `sentence-transformers/paraphrase-multilingual-MiniLM-L12
 
 Qdrant provides persistent cosine search, upsert, top-K, metadata filters, deletion, reindexing, and health checks. It runs in embedded local mode by default and supports a remote Qdrant URL/key without changing retrieval code.
 
-The deterministic hash embedder exists only for tests and diagnostics; it is never presented as the production model.
+The measured pipeline uses FastEmbed. The 512 MB Render Free deployment explicitly uses the deterministic 256-dimensional character-trigram feature-hashing embedder so the public demo can retain vector retrieval without exceeding its memory limit.
 
 ## Retrieval and reranking
 
