@@ -13,17 +13,17 @@ Docker was not available in the inspected development environment, so a successf
 
 ## Render Blueprint
 
-`render.yaml` is the prepared production path. It uses the repository Dockerfile, the Singapore region, CI-gated automatic deploys, `/health`, and a persistent disk mounted at `/app/runtime`. Persistent disks require a paid Render web-service plan.
+`render.yaml` is the prepared production path. It uses the repository Dockerfile, the Singapore region, a free Render web service, CI-gated automatic deploys, and `/health`. The free service uses ephemeral storage under `/app/runtime`.
 
-On an empty disk, `scripts.bootstrap_index` streams 50 official Hindi validation records directly from AI4Bharat MSMARCO-XI, applies semantic chunking, generates real multilingual vectors, and writes Qdrant under the mounted disk. Later restarts detect existing points and skip the operation. The bounded deployment sample keeps first-start resource use practical; the verified local evaluation remains the 500-record index described in the README.
+On an empty runtime, `scripts.bootstrap_index` loads 500 committed semantic chunks exported from the official Hindi validation split of AI4Bharat MSMARCO-XI, generates real multilingual vectors, and writes Qdrant locally. The seed avoids loading the large Parquet/datasets stack on the memory-limited free instance. The verified local evaluation remains the 500-record index described in the README.
 
-Create a Blueprint from the public repository, supply `ELEVENLABS_API_KEY` when Render prompts for the `sync: false` value, and wait for the initial dataset/vector bootstrap before judging readiness. Do not put the key in `render.yaml`.
+Create a Blueprint from the public repository, add `ELEVENLABS_API_KEY` as a secret in the Render service environment, and wait for the initial vector bootstrap before judging readiness. Do not put the key in `render.yaml`.
 
 ## Required production state
 
 - `ELEVENLABS_API_KEY` as a secret.
 - A real index, supplied either by remote Qdrant or `rag/data/bootstrap/chunks.jsonl` generated from `scripts/export_bootstrap.py`.
-- Persistent storage for embedded Qdrant, or `QDRANT_URL` and `QDRANT_API_KEY`.
+- A deployment seed that rebuilds embedded Qdrant after free-instance restarts, or remote `QDRANT_URL` and `QDRANT_API_KEY` storage.
 - `CORS_ORIGINS` set to the deployed origin.
 - A production generator: local llama server sidecar/model volume or a compatible managed inference service. `extractive` is a labeled fail-safe, not a claim that an LLM is active.
 - Health check against `/health`.
@@ -45,4 +45,4 @@ Do not mark deployment complete from a build log. A successful live request and 
 
 ## Current environment constraint
 
-Firebase Hosting alone cannot host this stateful Python/Qdrant/LLM container. Render is therefore the selected deployment target, but no Render authentication or API key was available in the inspected environment. Creating a static-only Firebase site would not satisfy the end-to-end requirement and is deliberately not reported as success.
+The free Render instance can host the single container but loses its local Qdrant files when it spins down or restarts, so the real MSMARCO-XI deployment seed is rebuilt at startup. ElevenLabs voice transcription remains unavailable until `ELEVENLABS_API_KEY` is configured as a Render secret.
