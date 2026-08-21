@@ -32,5 +32,3 @@ services:
         value: "0.50"
       - key: PREWARM_EMBEDDINGS
         value: "true"
-      - key: ELEVENLABS_API_KEY
-        sync: false
