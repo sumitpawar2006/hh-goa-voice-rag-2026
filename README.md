@@ -6,6 +6,7 @@ The interface exposes the transcript, retrieved chunks, stable document/chunk ID
 
 ## Status
 
+- Permanent live deployment: [https://nexus-voice-rag-2026.onrender.com](https://nexus-voice-rag-2026.onrender.com)
 - Backend, frontend, four chunkers, ingestion, vector search, reranking, guardrails, STT integration, evaluation harness, and benchmark tooling are implemented.
 - Unit/integration coverage includes ingestion, all chunkers, embeddings, Qdrant, retrieval, generation, grounding, safety, API validation, audio errors, STT failures/timeouts, vector failure, generator failure, and malformed output.
 - Live ElevenLabs transcription requires `ELEVENLABS_API_KEY`.
@@ -209,7 +210,7 @@ The final checker exits non-zero and says `NOT_READY` when credentials, measurem
 
 ## Deployment
 
-The multi-stage `Dockerfile` builds React and serves it with FastAPI as one container. `docker-compose.yml` persists embedded Qdrant. `render.yaml` defines a Singapore Docker web service with a persistent disk and streams a bounded real MSMARCO-XI sample into Qdrant on the first start, so dataset passages are not copied into this repository. Render prompts for the ElevenLabs secret during Blueprint creation. See [docs/deployment.md](docs/deployment.md).
+The multi-stage `Dockerfile` builds React and serves it with FastAPI as one container. `docker-compose.yml` persists embedded Qdrant for local deployment. `render.yaml` defines the public Singapore Render service. The free 512 MB instance boots from 500 checked-in semantic chunks exported from the real MSMARCO-XI Hindi validation data and uses deterministic feature-hashing vectors to stay within its memory limit. Set `ELEVENLABS_API_KEY` in Render to activate the implemented ElevenLabs Scribe v2 voice path. See [docs/deployment.md](docs/deployment.md).
 
 ## Submission assets
 
